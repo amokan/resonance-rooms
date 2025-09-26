@@ -123,11 +123,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                   step="0.01"
                   value={volume}
                   onChange={(e) => setVolume(parseFloat(e.target.value))}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
-                    height: '4px',
+                    height: window.innerWidth <= 768 ? '20px' : '4px',
                     background: '#333',
-                    outline: 'none'
+                    outline: 'none',
+                    cursor: 'pointer'
                   }}
                 />
               </div>
@@ -165,11 +168,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         step="0.5"
                         value={triggerRate}
                         onChange={(e) => setTriggerRate(parseFloat(e.target.value))}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                         style={{
                           width: '100%',
-                          height: '3px',
+                          height: window.innerWidth <= 768 ? '20px' : '3px',
                           background: '#333',
-                          outline: 'none'
+                          outline: 'none',
+                          cursor: 'pointer'
                         }}
                       />
                     </div>
@@ -184,11 +190,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         step="0.001"
                         value={attackTime}
                         onChange={(e) => setAttackTime(parseFloat(e.target.value))}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                         style={{
                           width: '100%',
-                          height: '3px',
+                          height: window.innerWidth <= 768 ? '20px' : '3px',
                           background: '#333',
-                          outline: 'none'
+                          outline: 'none',
+                          cursor: 'pointer'
                         }}
                       />
                     </div>
@@ -203,11 +212,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         step="0.01"
                         value={releaseTime}
                         onChange={(e) => setReleaseTime(parseFloat(e.target.value))}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                         style={{
                           width: '100%',
-                          height: '3px',
+                          height: window.innerWidth <= 768 ? '20px' : '3px',
                           background: '#333',
-                          outline: 'none'
+                          outline: 'none',
+                          cursor: 'pointer'
                         }}
                       />
                     </div>
@@ -226,11 +238,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                   step="100"
                   value={filterFrequency}
                   onChange={(e) => setFilterFrequency(parseInt(e.target.value))}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
-                    height: '4px',
+                    height: window.innerWidth <= 768 ? '20px' : '4px',
                     background: '#333',
-                    outline: 'none'
+                    outline: 'none',
+                    cursor: 'pointer'
                   }}
                 />
               </div>
@@ -268,11 +283,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         step="0.1"
                         value={reverbDecay}
                         onChange={(e) => setReverbDecay(parseFloat(e.target.value))}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                         style={{
                           width: '100%',
-                          height: '3px',
+                          height: window.innerWidth <= 768 ? '20px' : '3px',
                           background: '#333',
-                          outline: 'none'
+                          outline: 'none',
+                          cursor: 'pointer'
                         }}
                       />
                     </div>
@@ -287,11 +305,14 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                         step="0.05"
                         value={reverbWetness}
                         onChange={(e) => setReverbWetness(parseFloat(e.target.value))}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
                         style={{
                           width: '100%',
-                          height: '3px',
+                          height: window.innerWidth <= 768 ? '20px' : '3px',
                           background: '#333',
-                          outline: 'none'
+                          outline: 'none',
+                          cursor: 'pointer'
                         }}
                       />
                     </div>

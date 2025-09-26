@@ -123,12 +123,16 @@ export const CursorControls: React.FC<CursorControlsProps> = ({
                 <select
                   value={lfoType}
                   onChange={(e) => setLfoType(e.target.value as 'sine' | 'saw' | 'square' | 'triangle' | 'noise' | 'smoothNoise')}
+                  onTouchStart={(e) => e.stopPropagation()}
                   style={{
                     background: '#222',
                     color: '#ccc',
                     border: '1px solid #555',
-                    fontSize: '9px',
-                    marginLeft: '4px'
+                    fontSize: window.innerWidth <= 768 ? '12px' : '9px',
+                    marginLeft: window.innerWidth <= 768 ? '0' : '4px',
+                    padding: window.innerWidth <= 768 ? '4px' : '2px',
+                    width: window.innerWidth <= 768 ? '100%' : 'auto',
+                    cursor: 'pointer'
                   }}
                 >
                   <option value="sine">Sine</option>
@@ -148,7 +152,14 @@ export const CursorControls: React.FC<CursorControlsProps> = ({
                   step="0.05"
                   value={lfoFrequency}
                   onChange={(e) => setLfoFrequency(parseFloat(e.target.value))}
-                  style={{ width: '60px', marginLeft: '4px' }}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                  style={{
+                    width: window.innerWidth <= 768 ? '100%' : '60px',
+                    marginLeft: window.innerWidth <= 768 ? '0' : '4px',
+                    height: window.innerWidth <= 768 ? '20px' : 'auto',
+                    cursor: 'pointer'
+                  }}
                 />
               </div>
               <div style={{ marginBottom: '2px' }}>
@@ -160,7 +171,14 @@ export const CursorControls: React.FC<CursorControlsProps> = ({
                   step="0.1"
                   value={lfoInfluence}
                   onChange={(e) => setLfoInfluence(parseFloat(e.target.value))}
-                  style={{ width: '60px', marginLeft: '4px' }}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                  style={{
+                    width: window.innerWidth <= 768 ? '100%' : '60px',
+                    marginLeft: window.innerWidth <= 768 ? '0' : '4px',
+                    height: window.innerWidth <= 768 ? '20px' : 'auto',
+                    cursor: 'pointer'
+                  }}
                 />
               </div>
               <div>
@@ -172,7 +190,14 @@ export const CursorControls: React.FC<CursorControlsProps> = ({
                   step="15"
                   value={lfoPhase}
                   onChange={(e) => setLfoPhase(parseInt(e.target.value))}
-                  style={{ width: '60px', marginLeft: '4px' }}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                  style={{
+                    width: window.innerWidth <= 768 ? '100%' : '60px',
+                    marginLeft: window.innerWidth <= 768 ? '0' : '4px',
+                    height: window.innerWidth <= 768 ? '20px' : 'auto',
+                    cursor: 'pointer'
+                  }}
                 />
               </div>
             </div>
