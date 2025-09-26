@@ -73,6 +73,28 @@ export const fragmentShaderSource = `
 
     color = vec3(r, g, b);
 
+    // Add high-contrast geometric elements
+    // Sharp grid lines
+    float gridSize = 16.0;
+    vec2 grid = fract(st * gridSize);
+    float gridLines = step(0.95, grid.x) + step(0.95, grid.y);
+    color += vec3(gridLines * 0.3);
+
+    // High-contrast diagonal stripes modulated by cursor data
+    float stripeIntensity = 0.0;
+    float stripeFreq = 40.0;
+    for(int i = 0; i < 10; i++) {
+      if(i >= u_userCount) break;
+      vec2 userPos = u_users[i] / u_resolution.xy;
+      // Use user position to modulate stripe frequency and phase
+      stripeFreq += userPos.x * 20.0;
+      stripeIntensity += userPos.y * 0.3;
+    }
+
+    float stripes = sin((st.x + st.y) * stripeFreq + u_time * 2.0 + stripeIntensity);
+    stripes = step(0.8, stripes);
+    color += vec3(stripes * (0.2 + stripeIntensity * 0.1));
+
     // Add user influence
     for(int i = 0; i < 10; i++) {
       if(i >= u_userCount) break;

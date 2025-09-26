@@ -6,9 +6,6 @@ export interface UserData {
   id: string;
   x: number;
   y: number;
-  ip?: string;
-  userAgent?: string;
-  locale?: string;
   timestamp: number;
   isViewer?: boolean;
 }
@@ -25,13 +22,6 @@ export const useRoom = (supabase: SupabaseClient) => {
 
   const userIdRef = useRef<string>(Math.random().toString(36).substr(2, 9));
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
-
-  const getUserMetadata = (): Partial<UserData> => {
-    return {
-      userAgent: navigator.userAgent,
-      locale: navigator.language,
-    };
-  };
 
   const updateURL = (roomCode: string | null) => {
     const url = new URL(window.location.href);
@@ -159,8 +149,7 @@ export const useRoom = (supabase: SupabaseClient) => {
       x,
       y,
       timestamp: Date.now(),
-      isViewer,
-      ...getUserMetadata()
+      isViewer
     };
 
     channelRef.current.send({

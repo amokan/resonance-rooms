@@ -94,16 +94,27 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
             </div>
             <button
               onClick={audioEnabled ? stopAudio : startAudio}
+              onTouchStart={(e) => e.stopPropagation()}
+              onTouchEnd={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (audioEnabled) {
+                  stopAudio();
+                } else {
+                  startAudio();
+                }
+              }}
               style={{
                 background: audioEnabled ? '#ff4444' : '#44ff44',
                 color: '#000',
                 border: 'none',
-                padding: '4px 8px',
-                fontSize: '10px',
+                padding: window.innerWidth <= 768 ? '8px 12px' : '4px 8px',
+                fontSize: window.innerWidth <= 768 ? '12px' : '10px',
                 fontFamily: 'monospace',
                 cursor: 'pointer',
                 borderRadius: '2px',
-                width: '100%'
+                width: '100%',
+                minHeight: window.innerWidth <= 768 ? '44px' : 'auto'
               }}
             >
               {audioEnabled ? 'STOP' : 'START'}
@@ -148,7 +159,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     type="checkbox"
                     checked={envelopeEnabled}
                     onChange={(e) => setEnvelopeEnabled(e.target.checked)}
-                    style={{ margin: 0 }}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    style={{
+                      margin: 0,
+                      transform: window.innerWidth <= 768 ? 'scale(1.5)' : 'none',
+                      cursor: 'pointer'
+                    }}
                   />
                   <span style={{ color: envelopeEnabled ? '#0f0' : '#888' }}>
                     AR Envelope {envelopeEnabled ? 'ON' : 'OFF'}
@@ -263,7 +279,12 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                     type="checkbox"
                     checked={reverbEnabled}
                     onChange={(e) => setReverbEnabled(e.target.checked)}
-                    style={{ margin: 0 }}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    style={{
+                      margin: 0,
+                      transform: window.innerWidth <= 768 ? 'scale(1.5)' : 'none',
+                      cursor: 'pointer'
+                    }}
                   />
                   <span style={{ color: reverbEnabled ? '#0f0' : '#888' }}>
                     Reverb {reverbEnabled ? 'ON' : 'OFF'}
