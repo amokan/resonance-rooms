@@ -232,10 +232,15 @@ export const useAudio = (users: Map<string, UserData>) => {
       const buffer = createBytebeatBuffer(0.5);
       if (!buffer) return;
 
+      // Ensure envelope gain node belongs to current audio context
+      if (!envelopeGainRef.current || envelopeGainRef.current.context !== audioContext) {
+        return;
+      }
+
       const source = audioContext.createBufferSource();
       source.buffer = buffer;
       source.loop = true;
-      source.connect(envelopeGainRef.current!); // Connect to envelope instead of filter
+      source.connect(envelopeGainRef.current); // Connect to envelope instead of filter
       source.start();
 
       audioSourceRef.current = source;

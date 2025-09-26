@@ -83,12 +83,10 @@ export const useCursor = (
     };
 
     const broadcastPosition = () => {
-      if (cursorHeld || lfoEnabled) {
-        // Use current base position - held position if locked, otherwise current mouse position
-        const currentBase = cursorHeld ? heldPosition : canvasMousePos;
-        const currentPos = getCurrentCursorPosition(currentBase.x, currentBase.y);
-        broadcastUserData(currentPos.x, currentPos.y);
-      }
+      // Use current base position - held position if locked, otherwise current mouse position
+      const currentBase = cursorHeld ? heldPosition : canvasMousePos;
+      const currentPos = getCurrentCursorPosition(currentBase.x, currentBase.y);
+      broadcastUserData(currentPos.x, currentPos.y);
     };
 
     if (lfoEnabled || cursorHeld) {
@@ -104,7 +102,7 @@ export const useCursor = (
         clearInterval(intervalId);
       }
     };
-  }, [currentRoom, isViewer, lfoEnabled, cursorHeld, lfoType, lfoFrequency, lfoInfluence, broadcastUserData, getCurrentCursorPosition, canvasMousePos, heldPosition]);
+  }, [currentRoom, isViewer, lfoEnabled, cursorHeld, lfoType, lfoFrequency, lfoInfluence, broadcastUserData, getCurrentCursorPosition, heldPosition]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Disable LFO when cursor becomes unlocked
   useEffect(() => {

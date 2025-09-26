@@ -112,7 +112,8 @@ function App() {
         // Throttled broadcast on movement
         const now = performance.now();
         if (!room.isViewer && now - lastBroadcastTime > BROADCAST_THROTTLE) {
-          room.broadcastUserData(canvasX, canvasY);
+          const currentPos = cursor.getCurrentCursorPosition(canvasX, canvasY);
+          room.broadcastUserData(currentPos.x, currentPos.y);
           lastBroadcastTime = now;
         }
       }
@@ -169,7 +170,8 @@ function App() {
 
     const heartbeatInterval = setInterval(() => {
       if (room.channelRef.current) {
-        const currentPos = cursor.canvasMousePos;
+        const basePos = cursor.cursorHeld ? cursor.heldPosition : cursor.canvasMousePos;
+        const currentPos = cursor.getCurrentCursorPosition(basePos.x, basePos.y);
         room.broadcastUserData(currentPos.x, currentPos.y);
       }
     }, 10000);
@@ -248,17 +250,19 @@ function App() {
       gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
 
       gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
-      gl.uniform1f(timeUniformLocation, time * 0.001);
+      gl.uniform1f(timeUniformLocation, time * 0.0003);
 
       const participants = Array.from(room.users.values()).filter(user => !user.isViewer).slice(0, 10);
       const userPositions = new Float32Array(20);
 
       // Include current user's live position if they're a participant
       if (!room.isViewer && participants.length < 10) {
+        const basePos = cursor.cursorHeld ? cursor.heldPosition : cursor.canvasMousePos;
+        const currentPos = cursor.getCurrentCursorPosition(basePos.x, basePos.y);
         const currentUserData = {
           id: room.userIdRef.current,
-          x: cursor.canvasMousePos.x,
-          y: cursor.canvasMousePos.y,
+          x: currentPos.x,
+          y: currentPos.y,
           timestamp: Date.now(),
           isViewer: false
         };
@@ -291,7 +295,7 @@ function App() {
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationId);
     };
-  }, [room.users, cursor.canvasMousePos.x, cursor.canvasMousePos.y, room.isViewer, room.userIdRef]);
+  }, [room.users, cursor.canvasMousePos.x, cursor.canvasMousePos.y, room.isViewer, room.userIdRef, cursor]);
 
   if (room.showRoomSelector) {
     return (
@@ -500,7 +504,14 @@ function App() {
       )}
 
       {(!isMobile || activePanel === 'users') && (
-        <UserList users={room.users} currentUserId={room.userIdRef.current} />
+        <UserList
+          users={room.users}
+          currentUserId={room.userIdRef.current}
+          currentUserPosition={(() => {
+            const basePos = cursor.cursorHeld ? cursor.heldPosition : cursor.canvasMousePos;
+            return cursor.getCurrentCursorPosition(basePos.x, basePos.y);
+          })()}
+        />
       )}
 
       {(!isMobile || activePanel === 'audio') && (

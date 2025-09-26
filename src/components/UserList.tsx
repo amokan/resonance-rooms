@@ -4,9 +4,10 @@ import type { UserData } from '../hooks/useRoom';
 interface UserListProps {
   users: Map<string, UserData>;
   currentUserId: string;
+  currentUserPosition?: { x: number; y: number };
 }
 
-export const UserList: React.FC<UserListProps> = ({ users, currentUserId }) => {
+export const UserList: React.FC<UserListProps> = ({ users, currentUserId, currentUserPosition }) => {
   if (users.size === 0) return null;
 
   return (
@@ -32,7 +33,11 @@ export const UserList: React.FC<UserListProps> = ({ users, currentUserId }) => {
           marginBottom: '2px',
           color: user.isViewer ? '#888' : `hsl(${index * 137.5 % 360}, 70%, 70%)`
         }}>
-          {user.isViewer ? '👁' : '●'} {id === currentUserId ? 'Me' : id.slice(0, 8)}: ({Math.round(user.x)}, {Math.round(user.y)})
+          {user.isViewer ? '👁' : '●'} {id === currentUserId ? 'Me' : id.slice(0, 8)}: ({
+            id === currentUserId && currentUserPosition
+              ? `${Math.round(currentUserPosition.x)}, ${Math.round(currentUserPosition.y)}`
+              : `${Math.round(user.x)}, ${Math.round(user.y)}`
+          })
         </div>
       ))}
     </div>
