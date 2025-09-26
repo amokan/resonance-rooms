@@ -65,7 +65,7 @@ export const useCursor = (
     if (!currentRoom || isViewer) return;
 
     let animationId: number;
-    let intervalId: number;
+    let intervalId: ReturnType<typeof setInterval>;
     const BROADCAST_FREQUENCY = 50; // 20 Hz - same as mouse movement
 
     const updateCursor = () => {

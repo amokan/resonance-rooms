@@ -218,7 +218,7 @@ export const useRoom = (supabase: SupabaseClient) => {
     });
 
     channel.on('broadcast', { event: 'user_move' }, (payload: BroadcastPayload) => {
-      const userData = payload.payload;
+      const userData = payload.payload as unknown as UserData;
       setUsers(prev => {
         const newUsers = new Map(prev);
         newUsers.set(userData.id, userData);
@@ -227,7 +227,7 @@ export const useRoom = (supabase: SupabaseClient) => {
     });
 
     channel.on('broadcast', { event: 'user_leave' }, (payload: BroadcastPayload) => {
-      const { userId } = payload.payload;
+      const { userId } = payload.payload as { userId: string };
       setUsers(prev => {
         const newUsers = new Map(prev);
         newUsers.delete(userId);
@@ -236,7 +236,7 @@ export const useRoom = (supabase: SupabaseClient) => {
     });
 
     channel.on('broadcast', { event: 'capacity_check' }, (payload: BroadcastPayload) => {
-      const { requesterId } = payload.payload;
+      const { requesterId } = payload.payload as { requesterId: string };
       if (requesterId !== currentUserId) {
         channel.send({
           type: 'broadcast',
