@@ -1,6 +1,6 @@
 # Resonance Rooms
 
-_A multi-user, real-time audio/visual collaboration experience using [Supabase Realtime](https://supabase.com/docs/guides/realtime), WebGL, and Web Audio APIs._
+_A multi-user, real-time audio/visual toy using [Supabase Realtime](https://supabase.com/docs/guides/realtime), WebGL, and Web Audio APIs._
 
 ## ✨ Features
 
