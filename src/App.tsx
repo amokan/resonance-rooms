@@ -20,10 +20,15 @@ import { vertexShaderSource, fragmentShaderSource, createShader, createProgram }
 // Create Supabase client as module singleton to prevent multiple instances
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+  {
+    realtime: {
+      logLevel: 'info'
+    }
+  }
 );
 
-const BROADCAST_THROTTLE = 50;
+const BROADCAST_THROTTLE = 250;
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

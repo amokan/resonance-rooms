@@ -108,10 +108,10 @@ ESLint is configured with modern flat config supporting TypeScript, React Hooks,
 
 ## 🎵 Audio Engine
 
-The audio engine generates sound using bytecode formulas based on user cursor positions:
+The audio engine generates sound using [bytebeat](https://youtu.be/GtQdIYUtAHg?si=NyaHRG4ucpRpRR4r) formulas based on user cursor positions:
 
 ```javascript
-// Example bytecode formula
+// Example formula
 const formula = (t * x) & (t >> (y + (x % 32)));
 ```
 
